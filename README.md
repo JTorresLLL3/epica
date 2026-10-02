@@ -1,91 +1,68 @@
-# Practica: Épicas Spring Boot y Flujo Colaborativo Git / GitHub
+# Practica: Épica 3 - Plataforma de Reseñas de Libros y Flujo Colaborativo Git / GitHub
 
 > **Universidad Tecnológica de Chihuahua (UTCH)**  
 > **Asignatura:** Desarrollo Web Integral  
 > **Profesor:** Instructor de la Materia  
-> **Proyecto:** Desarrollo de Épicas en Spring Boot y Gestión de Flujo Git Profesional  
+> **Proyecto:** Desarrollo de la Épica 3 en Spring Boot y Gestión de Flujo Git Profesional  
 > **Entregables:** Repositorio en GitHub con fusión remota de ramas, historias de usuario, `README.md` y capturas del proceso.
 
 ---
 
 ## 👥 Integrantes del Equipo (5 Personas)
 
-| Integrante | Rol / Responsabilidad | Asignación Principales |
-| :--- | :--- | :--- |
-| **Integrante 1** | Developer | **Épica 1 - HU 1.1:** Registro de Avistamientos de Fauna Silvestre (`POST /api/avistamientos`) |
-| **Integrante 2** | Developer | **Épica 1 - HU 1.2:** Consulta de Avistamientos Registrados (`GET /api/avistamientos`) |
-| **Integrante 3** | Developer | **Épica 3 - HU 3.1:** Registro / Publicación de Reseñas de Libros (`POST /api/resenas`) |
-| **Integrante 4** | Developer | **Épica 3 - HU 3.2:** Consulta de Reseñas por Libro / Título (`GET /api/resenas`) |
-| **Integrante 5** | Lead / DevSecOps | Inicialización del proyecto Spring Boot, `.gitconfig`, README, Pruebas y Cherry-Pick Hotfix |
+La distribución de tareas para la implementación completa de la **Épica 3** se dividió entre los 5 integrantes:
+
+| Integrante | Rol / Responsabilidad | Asignación Específica | Rama Git Asignada |
+| :--- | :--- | :--- | :--- |
+| **Integrante 1** | Developer | **HU 3.1:** Controlador y Endpoints de Publicación de Reseñas (`POST /api/resenas`) | `feature/hu-3.1-publicar-resena-controller` |
+| **Integrante 2** | Developer | **HU 3.1:** Servicio de Negocio y Validación de Puntuación (1-5 estrellas) | `feature/hu-3.1-publicar-resena-service` |
+| **Integrante 3** | Developer | **HU 3.2:** Controlador y Endpoints de Consulta de Reseñas (`GET /api/resenas`) | `feature/hu-3.2-consultar-resenas-controller` |
+| **Integrante 4** | Developer | **HU 3.2:** Capa de Datos, Repositorio JPA y Filtros por Título / Autor | `feature/hu-3.2-consultar-resenas-repository` |
+| **Integrante 5** | Lead / DevSecOps | Configuración Base Spring Boot, `.gitconfig`, Pruebas Automatizadas y Cherry-Pick Hotfix | `feature/hotfix-validacion-dto` |
 
 ---
 
-## 📋 Épicas Seleccionadas
+## 📖 Épica 3: Plataforma de Inserción y Consulta de Reseñas de Libros
 
-Se analizaron las 7 épicas del documento de requerimientos y se seleccionaron las **dos épicas más sencillas y ágiles**:
+### Descripción General
+Un servicio web backend desarrollado en Spring Boot donde los lectores pueden publicar reseñas y calificaciones de libros leídos, así como consultar las opiniones existentes por título o autor.
 
-### 1. Épica 1: Sistema de Registro y Consulta de Avistamientos de Fauna Silvestre
-Plataforma para que investigadores y guardabosques registren avistamientos de animales en reservas naturales y consulten el historial de registros filtrados.
-* **Tecnologías:** Java 21, Spring Boot 3, Spring Data JPA, H2 Database.
-
-### 2. Épica 3: Plataforma de Inserción y Consulta de Reseñas de Libros
-Servicio web donde los lectores pueden publicar reseñas y calificaciones de libros leídos, así como consultar las opiniones existentes por título o autor.
-* **Tecnologías:** Java 21, Spring Boot 3, Spring Data JPA, H2 Database.
+* **Tecnologías Utilizadas:** Java 21, Spring Boot 3.2.5, Spring Data JPA, H2 Database (en memoria), Maven.
 
 ---
 
-## 📖 Historias de Usuario (HU) y Criterios de Aceptación
+## 📝 Historias de Usuario (HU) y Criterios de Aceptación
 
-### 🟢 Épica 1 - Fauna Silvestre
-
-#### HU 1.1: Registrar Avistamiento de Fauna Silvestre
-* **Como:** Guardabosques / Investigador
-* **Quiero:** Registrar un nuevo avistamiento de fauna silvestre indicando especie, ubicación geográfica, fecha y observaciones.
-* **Para:** Mantener un historial detallado de la fauna en la reserva natural.
-* **Criterios de Aceptación:**
-  1. El endpoint `POST /api/avistamientos` recibe especie, ubicación, fecha y observaciones.
-  2. Los campos `especie`, `ubicacionGeografica` y `fechaAvistamiento` son obligatorios.
-  3. Retorna un código HTTP `201 Created` con el DTO del avistamiento y su `id` generado.
-
-#### HU 1.2: Consultar Avistamientos Registrados
-* **Como:** Investigador
-* **Quiero:** Consultar la lista completa de avistamientos o filtrados por especie.
-* **Para:** Analizar patrones de avistamiento y distribución de especies.
-* **Criterios de Aceptación:**
-  1. El endpoint `GET /api/avistamientos` retorna la lista completa de avistamientos registrados.
-  2. Permite filtrar mediante el parámetro opcional `GET /api/avistamientos?especie=Jaguar`.
-  3. Retorna un código HTTP `200 OK` con un array JSON de avistamientos.
-
----
-
-### 🔵 Épica 3 - Reseñas de Libros
-
-#### HU 3.1: Publicar Reseña de Libro
+### 🔵 HU 3.1: Publicar Reseña de Libro
 * **Como:** Lector
-* **Quiero:** Publicar una reseña indicando título del libro, autor, comentario y una puntuación de 1 a 5 estrellas.
-* **Para:** Compartir mi opinión con la comunidad de lectores.
+* **Quiero:** Publicar una reseña indicando el título del libro, el nombre del autor, un comentario y una puntuación de 1 a 5 estrellas.
+* **Para:** Compartir mi opinión y recomendación con otros lectores de la comunidad.
 * **Criterios de Aceptación:**
-  1. El endpoint `POST /api/resenas` valida que la puntuación esté en el rango de 1 a 5.
-  2. Asigna automáticamente la fecha y hora de publicación (`fechaPublicacion`).
-  3. Retorna un código HTTP `201 Created` con el objeto de la reseña creada.
+  1. El endpoint `POST /api/resenas` valida que los campos `tituloLibro`, `autorLibro`, `comentario` y `puntuacion` sean obligatorios.
+  2. Valida que la puntuación esté estrictamente en el rango de 1 a 5 (`@Min(1)` y `@Max(5)`).
+  3. Genera automáticamente la fecha y hora exacta de publicación (`fechaPublicacion`).
+  4. Retorna el código de respuesta HTTP `201 Created` con el objeto DTO de la reseña registrada (incluyendo su `id`).
 
-#### HU 3.2: Consultar Reseñas asociadas a un Libro
+---
+
+### 🔵 HU 3.2: Consultar Reseñas asociadas a un Libro
 * **Como:** Visitante
-* **Quiero:** Consultar las reseñas existentes por título o autor del libro.
+* **Quiero:** Consultar las reseñas existentes filtrando por título o autor del libro, o ver el listado completo.
 * **Para:** Tomar una decisión informada sobre qué libro leer a continuación.
 * **Criterios de Aceptación:**
-  1. El endpoint `GET /api/resenas` retorna todas las reseñas registradas.
-  2. Permite filtrar por título mediante `GET /api/resenas?tituloLibro=Cien Años`.
-  3. Retorna código HTTP `200 OK`.
+  1. El endpoint `GET /api/resenas` retorna la lista completa de reseñas registradas.
+  2. Permite búsqueda o filtrado mediante parámetros opcionales (`GET /api/resenas?tituloLibro=Cien Años`).
+  3. La búsqueda es insensible a mayúsculas/minúsculas y coincide parcialmente (`ILIKE / CONTAINING`).
+  4. Retorna el código de respuesta HTTP `200 OK` con un array JSON de las reseñas encontradas.
 
 ---
 
 ## 🔀 Documentación del Flujo de Trabajo Git / GitHub
 
-A continuación se ilustra y documenta el proceso seguido por el equipo de 5 integrantes.
+A continuación se detalla el flujo colaborativo ejecutado por los 5 integrantes del equipo.
 
-### Paso 1: Configuración Global/Local de Git (`.gitconfig`)
-Cada integrante del equipo configuró su identidad local en `.gitconfig` antes de realizar commits.
+### Paso 1: Configuración Local de Git (`.gitconfig`)
+Cada integrante configuró su identidad local antes de generar commits:
 
 ```bash
 git config --global user.name "Nombre Integrante"
@@ -98,16 +75,20 @@ git config --list
 
 ---
 
-### Paso 2: Inicialización del Repositorio y Commit Inicial
-Se inicializó el repositorio local con la estructura base Spring Boot y la rama `main`.
+### Paso 2: Inicialización del Repositorio y Rama Base (`main` / `develop`)
+Se inicializó el repositorio con la estructura Spring Boot y se definieron las ramas principales `main` y `develop`.
 
 ```bash
 git init
 git add .
-git commit -m "feat: estructura base del proyecto Spring Boot y configuracion inicial"
+git commit -m "feat: estructura base Spring Boot para Epica 3 de Resenas de Libros"
 git branch -M main
-git remote add origin https://github.com/usuario/epica-utch.git
+git remote add origin https://github.com/usuario/epica-resenas-libros.git
 git push -u origin main
+
+# Creación de rama develop
+git checkout -b develop
+git push -u origin develop
 ```
 
 > **Evidencia:**  
@@ -116,16 +97,16 @@ git push -u origin main
 ---
 
 ### Paso 3: Creación de Ramas por Feature para cada Integrante
-Cada integrante creó su rama de trabajo siguiendo la nomenclatura `feature/hu-X.Y-descripcion`:
+Cada integrante creó su rama de desarrollo basada en `develop`:
 
-* **Integrante 1:** `git checkout -b feature/hu-1.1-registro-avistamiento`
-* **Integrante 2:** `git checkout -b feature/hu-1.2-consulta-avistamiento`
-* **Integrante 3:** `git checkout -b feature/hu-3.1-publicar-resena`
-* **Integrante 4:** `git checkout -b feature/hu-3.2-consultar-resenas`
+* **Integrante 1:** `git checkout -b feature/hu-3.1-publicar-resena-controller`
+* **Integrante 2:** `git checkout -b feature/hu-3.1-publicar-resena-service`
+* **Integrante 3:** `git checkout -b feature/hu-3.2-consultar-resenas-controller`
+* **Integrante 4:** `git checkout -b feature/hu-3.2-consultar-resenas-repository`
 * **Integrante 5:** `git checkout -b feature/hotfix-validacion-dto`
 
 ```bash
-git checkout -b feature/hu-1.1-registro-avistamiento
+git checkout -b feature/hu-3.1-publicar-resena-controller
 git branch -a
 ```
 
@@ -134,13 +115,13 @@ git branch -a
 
 ---
 
-### Paso 4: Despliegue de Código y Commits Específicos
-Cada integrante desarrolló su módulo correspondiente y realizó commits descriptivos:
+### Paso 4: Commits Específicos por Tarea
+Cada integrante realizó cambios puntuales y commits siguiendo la convención Conventional Commits:
 
 ```bash
 git add .
-git commit -m "feat(avistamiento): implementar modelo, repository y DTO para HU 1.1"
-git push origin feature/hu-1.1-registro-avistamiento
+git commit -m "feat(resena): implementar ResenaLibroController y DTOs para HU 3.1"
+git push origin feature/hu-3.1-publicar-resena-controller
 ```
 
 > **Evidencia:**  
@@ -149,80 +130,73 @@ git push origin feature/hu-1.1-registro-avistamiento
 ---
 
 ### Paso 5: Apertura de Pull Requests (PR) en GitHub
-En la plataforma remota GitHub se abrieron las Pull Requests asociadas a cada historia de usuario solicitando la revisión de código por parte del equipo.
+En la plataforma GitHub se crearon las Pull Requests de cada rama hacia la rama `develop` para revisión entre pares.
 
 > **Evidencia:**  
-> ![Captura 5: Pull Requests Creados en GitHub](screenshots/05_pull_requests.png)
+> ![Captura 5: Pull Requests en GitHub](screenshots/05_pull_requests.png)
 
 ---
 
 ### Paso 6: Revisión de Código y Fusión Remota (Merge Remote)
-Siguiendo las buenas prácticas, la fusión de ramas se realizó **exclusivamente en remoto** mediante la interfaz de GitHub (`Merge Pull Request`), garantizando la integridad de la rama `main`.
+Las fusiones de ramas se realizaron exclusivamente en remoto a través de la interfaz de GitHub usando `Merge Pull Request`.
 
 > **Evidencia:**  
-> ![Captura 6: Fusión Remota de Pull Requests](screenshots/06_remote_merge.png)
+> ![Captura 6: Fusión Remota de PRs](screenshots/06_remote_merge.png)
 
 ---
 
 ### Paso 7: Fusión Selectiva de Commits (`git cherry-pick`)
-Para demostrar la capacidad de seleccionar y fusionar commits específicos entre ramas sin integrar toda la rama de desarrollo, se realizó un `git cherry-pick`:
+Para demostrar la integración selectiva de commits entre ramas:
 
-1. Se creó un commit de corrección urgente en la rama `feature/hotfix-validacion-dto` (Hash: `a1b2c3d` por ejemplo).
-2. Se extrajo únicamente dicho commit hacia `main`:
+1. Se creó un commit de corrección de validaciones en `feature/hotfix-validacion-dto`.
+2. Se aplicó únicamente ese commit hacia `develop` o `main`:
 
 ```bash
-git checkout main
-git pull origin main
-git cherry-pick <hash_del_commit_especifico>
-git push origin main
+git checkout develop
+git pull origin develop
+git cherry-pick <hash_del_commit>
+git push origin develop
 ```
 
 > **Evidencia:**  
-> ![Captura 7: Aplicación de Cherry-Pick](screenshots/07_cherry_pick.png)
+> ![Captura 7: Aplicación de Git Cherry-Pick](screenshots/07_cherry_pick.png)
 
 ---
 
-### Paso 8: Verificación Final y Ejecución de Pruebas Automatizadas
-Se ejecutó la suite de pruebas unitarias e integración en Spring Boot para validar que los endpoints de ambas épicas funcionan correctamente.
+### Paso 8: Verificación y Ejecución de Pruebas
+Se ejecutó la suite de pruebas automatizadas en Spring Boot para certificar la funcionalidad de la Épica 3:
 
 ```bash
 mvn clean test
 ```
 
 > **Evidencia:**  
-> ![Captura 8: Pruebas Automatizadas Exitosas](screenshots/08_maven_tests.png)
+> ![Captura 8: Pruebas Exitosas](screenshots/08_maven_tests.png)
 
 ---
 
-## 🛠️ Cómo Ejecutar el Proyecto Localmente
+## 🛠️ Instrucciones para Ejecutar la Aplicación
 
-### Requisitos Previos
-* Java JDK 21+ instalado.
-* Apache Maven 3.9+ instalado.
-* Git.
-
-### Instrucciones
-1. **Clonar el repositorio:**
+1. **Clonar el proyecto:**
    ```bash
-   git clone https://github.com/usuario/epica-utch.git
-   cd epica-utch
+   git clone https://github.com/usuario/epica-resenas-libros.git
+   cd epica-resenas-libros
    ```
-2. **Compilar y probar el proyecto:**
+2. **Ejecutar pruebas:**
    ```bash
    mvn clean test
    ```
-3. **Iniciar la aplicación:**
+3. **Iniciar servidor:**
    ```bash
    mvn spring-boot:run
    ```
-4. **Acceso a la Consola H2 Database:**
+4. **Acceso a H2 Console:**
    * URL: `http://localhost:8080/h2-console`
    * JDBC URL: `jdbc:h2:mem:epicadb`
-   * Usuario: `sa`
-   * Contraseña: *(Vacío)*
+   * User: `sa` | Password: *(vacío)*
 
 ---
 
-## 📌 Enlaces del Entregable
+## 📌 Enlace del Repositorio
 
-* **URL del Repositorio Remoto en GitHub:** `https://github.com/usuario/epica-utch`
+* **URL del Repositorio GitHub:** `https://github.com/usuario/epica-resenas-libros`
