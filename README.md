@@ -8,17 +8,15 @@
 
 ---
 
-## 👥 Integrantes del Equipo (5 Personas)
+## 👥 Integrantes del Equipo (2 Personas)
 
-La distribución de tareas para la implementación completa de la **Épica 3** se dividió entre los 5 integrantes:
+La distribución de tareas para la implementación de la **Épica 3** se dividió de manera equitativa entre los 2 integrantes del equipo:
 
 | Integrante | Rol / Responsabilidad | Asignación Específica | Rama Git Asignada |
 | :--- | :--- | :--- | :--- |
-| **Integrante 1** | Developer | **HU 3.1:** Controlador y Endpoints de Publicación de Reseñas (`POST /api/resenas`) | `feature/hu-3.1-publicar-resena-controller` |
-| **Integrante 2** | Developer | **HU 3.1:** Servicio de Negocio y Validación de Puntuación (1-5 estrellas) | `feature/hu-3.1-publicar-resena-service` |
-| **Integrante 3** | Developer | **HU 3.2:** Controlador y Endpoints de Consulta de Reseñas (`GET /api/resenas`) | `feature/hu-3.2-consultar-resenas-controller` |
-| **Integrante 4** | Developer | **HU 3.2:** Capa de Datos, Repositorio JPA y Filtros por Título / Autor | `feature/hu-3.2-consultar-resenas-repository` |
-| **Integrante 5** | Lead / DevSecOps | Configuración Base Spring Boot, `.gitconfig`, Pruebas Automatizadas y Cherry-Pick Hotfix | `feature/hotfix-validacion-dto` |
+| **Integrante 1** | Developer | **HU 3.1:** Publicar Reseña de Libro (`POST /api/resenas`, DTOs, Controlador y Servicio de Registro) | `feature/hu-3.1-publicar-resena` |
+| **Integrante 2** | Developer | **HU 3.2:** Consultar Reseñas asociadas a un Libro (`GET /api/resenas`, Filtros por Título/Autor y JPA Repository) | `feature/hu-3.2-consultar-resenas` |
+| **Integración / Hotfix** | Ambos | Configuración de `.gitconfig`, Pruebas Automatizadas y Fusión Selectiva (`git cherry-pick`) | `feature/hotfix-validacion-puntuacion` |
 
 ---
 
@@ -33,7 +31,7 @@ Un servicio web backend desarrollado en Spring Boot donde los lectores pueden pu
 
 ## 📝 Historias de Usuario (HU) y Criterios de Aceptación
 
-### 🔵 HU 3.1: Publicar Reseña de Libro
+### 🔵 HU 3.1: Publicar Reseña de Libro (Integrante 1)
 * **Como:** Lector
 * **Quiero:** Publicar una reseña indicando el título del libro, el nombre del autor, un comentario y una puntuación de 1 a 5 estrellas.
 * **Para:** Compartir mi opinión y recomendación con otros lectores de la comunidad.
@@ -45,7 +43,7 @@ Un servicio web backend desarrollado en Spring Boot donde los lectores pueden pu
 
 ---
 
-### 🔵 HU 3.2: Consultar Reseñas asociadas a un Libro
+### 🔵 HU 3.2: Consultar Reseñas asociadas a un Libro (Integrante 2)
 * **Como:** Visitante
 * **Quiero:** Consultar las reseñas existentes filtrando por título o autor del libro, o ver el listado completo.
 * **Para:** Tomar una decisión informada sobre qué libro leer a continuación.
@@ -59,7 +57,7 @@ Un servicio web backend desarrollado en Spring Boot donde los lectores pueden pu
 
 ## 🔀 Documentación del Flujo de Trabajo Git / GitHub
 
-A continuación se detalla el flujo colaborativo ejecutado por los 5 integrantes del equipo.
+A continuación se detalla el flujo colaborativo ejecutado por los 2 integrantes del equipo.
 
 ### Paso 1: Configuración Local de Git (`.gitconfig`)
 Cada integrante configuró su identidad local antes de generar commits:
@@ -99,14 +97,12 @@ git push -u origin develop
 ### Paso 3: Creación de Ramas por Feature para cada Integrante
 Cada integrante creó su rama de desarrollo basada en `develop`:
 
-* **Integrante 1:** `git checkout -b feature/hu-3.1-publicar-resena-controller`
-* **Integrante 2:** `git checkout -b feature/hu-3.1-publicar-resena-service`
-* **Integrante 3:** `git checkout -b feature/hu-3.2-consultar-resenas-controller`
-* **Integrante 4:** `git checkout -b feature/hu-3.2-consultar-resenas-repository`
-* **Integrante 5:** `git checkout -b feature/hotfix-validacion-dto`
+* **Integrante 1:** `git checkout -b feature/hu-3.1-publicar-resena`
+* **Integrante 2:** `git checkout -b feature/hu-3.2-consultar-resenas`
+* **Hotfix (Cherry-Pick):** `git checkout -b feature/hotfix-validacion-puntuacion`
 
 ```bash
-git checkout -b feature/hu-3.1-publicar-resena-controller
+git checkout -b feature/hu-3.1-publicar-resena
 git branch -a
 ```
 
@@ -121,7 +117,7 @@ Cada integrante realizó cambios puntuales y commits siguiendo la convención Co
 ```bash
 git add .
 git commit -m "feat(resena): implementar ResenaLibroController y DTOs para HU 3.1"
-git push origin feature/hu-3.1-publicar-resena-controller
+git push origin feature/hu-3.1-publicar-resena
 ```
 
 > **Evidencia:**  
@@ -148,7 +144,7 @@ Las fusiones de ramas se realizaron exclusivamente en remoto a través de la int
 ### Paso 7: Fusión Selectiva de Commits (`git cherry-pick`)
 Para demostrar la integración selectiva de commits entre ramas:
 
-1. Se creó un commit de corrección de validaciones en `feature/hotfix-validacion-dto`.
+1. Se creó un commit de corrección de validaciones en `feature/hotfix-validacion-puntuacion`.
 2. Se aplicó únicamente ese commit hacia `develop` o `main`:
 
 ```bash
