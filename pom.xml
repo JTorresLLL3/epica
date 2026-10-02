@@ -15,7 +15,7 @@
     <artifactId>epica</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>epica</name>
-    <description>Proyecto de Epicas Spring Boot - UTCH (Fauna y Resenas)</description>
+    <description>Proyecto de Epica 3 - Resenas de Libros (Spring Boot + PostgreSQL)</description>
 
     <properties>
         <java.version>21</java.version>
@@ -40,7 +40,14 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- Base de Datos H2 -->
+        <!-- PostgreSQL Driver -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Base de Datos H2 (Para pruebas locales/desarrollo ligero) -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

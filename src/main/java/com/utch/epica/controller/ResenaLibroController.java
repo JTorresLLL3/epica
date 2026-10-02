@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/resenas")
 public class ResenaLibroController {
@@ -25,15 +23,5 @@ public class ResenaLibroController {
     public ResponseEntity<ResenaLibroResponseDTO> publicarResena(@Valid @RequestBody ResenaLibroRequestDTO requestDTO) {
         ResenaLibroResponseDTO creada = resenaLibroService.publicarResena(requestDTO);
         return new ResponseEntity<>(creada, HttpStatus.CREATED);
-    }
-
-    // HU 3.2: Consultar reseñas asociadas a un libro específico (o todas)
-    @GetMapping
-    public ResponseEntity<List<ResenaLibroResponseDTO>> consultarResenas(
-            @RequestParam(required = false) String tituloLibro) {
-        if (tituloLibro != null && !tituloLibro.trim().isEmpty()) {
-            return ResponseEntity.ok(resenaLibroService.obtenerResenasPorTitulo(tituloLibro));
-        }
-        return ResponseEntity.ok(resenaLibroService.obtenerTodasResenas());
     }
 }

@@ -1,57 +1,37 @@
-# Práctica: Épica 3 - Plataforma de Reseñas de Libros y Flujo Colaborativo Git / GitHub
+# Práctica: HU 3.1 - Publicar Reseña de Libro (Épica 3)
 
 > **Universidad Tecnológica de Chihuahua (UTCH)**  
 > **Asignatura:** Desarrollo Web Integral  
 > **Profesor:** Instructor de la Materia  
-> **Proyecto:** Desarrollo de la Épica 3 en Spring Boot y Gestión de Flujo Git Profesional  
-> **Entregables:** Repositorio en GitHub con fusión remota de ramas, historias de usuario, `README.md` y capturas del proceso.
+> **Proyecto:** Implementación de la Historia de Usuario 3.1 (Publicar Reseña de Libro) y Flujo Git Profesional  
+> **Entregables:** Repositorio en GitHub con fusión remota de ramas, historia de usuario 3.1, `README.md` y capturas del proceso.
 
 ---
 
-## 👥 Integrantes del Equipo (2 Personas)
+## 👥 Integrantes del Equipo y Distribución de Tareas
 
-La distribución de tareas para la implementación de la **Épica 3** se dividió de manera equitativa entre los integrantes del equipo:
+El desarrollo colaborativo de la **HU 3.1 (Publicar Reseña de Libro)** se dividió entre los 2 integrantes del equipo:
 
 | Integrante | Rol / Responsabilidad | Asignación Específica | Rama Git Asignada |
 | :--- | :--- | :--- | :--- |
-| **Joel Torres (jt)** | Developer | **HU 3.1:** Publicar Reseña de Libro (`POST /api/resenas`, DTOs, Controlador y Servicio de Registro) | `feat/jt/publicar-resena` |
-| **Diego** | Developer | **HU 3.2:** Consultar Reseñas asociadas a un Libro (`GET /api/resenas`, Filtros por Título/Autor y JPA Repository) | `feat/diego/consultar-resenas` |
-| **Integración / Hotfix** | Joel & Diego | Configuración de `.gitconfig`, Pruebas Automatizadas y Fusión Selectiva (`git cherry-pick`) | `feat/jt/hotfix-validacion-puntuacion` |
+| **Joel Torres (jt)** | Developer | **Controlador REST y DTOs:** Endpoints HTTP (`POST /api/resenas`), Validaciones (`@Valid`, `@NotBlank`, `@Min`, `@Max`) y DTOs de Request/Response | `feat/jt/publicar-resena-controller` |
+| **Diego** | Developer | **Capa de Servicio y Persistencia:** Lógica de negocio (`ResenaLibroService`), entidad JPA (`ResenaLibro`) y repositorio (`ResenaLibroRepository`) | `feat/diego/publicar-resena-service` |
+| **Hotfix / Integración** | Joel & Diego | Configuración de `.gitconfig`, Pruebas Automatizadas y Fusión Selectiva (`git cherry-pick`) | `feat/jt/hotfix-validacion-dto` |
 
 ---
 
-## 📖 Épica 3: Plataforma de Inserción y Consulta de Reseñas de Libros
+## 📝 Historia de Usuario 3.1: Publicar Reseña de Libro
 
-### Descripción General
-Un servicio web backend desarrollado en Spring Boot donde los lectores pueden publicar reseñas y calificaciones de libros leídos, así como consultar las opiniones existentes por título o autor.
-
-* **Tecnologías Utilizadas:** Java 21, Spring Boot 3.2.5, Spring Data JPA, H2 Database (en memoria), Maven.
-
----
-
-## 📝 Historias de Usuario (HU) y Criterios de Aceptación
-
-### 🔵 HU 3.1: Publicar Reseña de Libro (Joel Torres)
+### Descripción
 * **Como:** Lector
 * **Quiero:** Publicar una reseña indicando el título del libro, el nombre del autor, un comentario y una puntuación de 1 a 5 estrellas.
 * **Para:** Compartir mi opinión y recomendación con otros lectores de la comunidad.
-* **Criterios de Aceptación:**
-  1. El endpoint `POST /api/resenas` valida que los campos `tituloLibro`, `autorLibro`, `comentario` y `puntuacion` sean obligatorios.
-  2. Valida que la puntuación esté strictly en el rango de 1 a 5 (`@Min(1)` y `@Max(5)`).
-  3. Genera automáticamente la fecha y hora exacta de publicación (`fechaPublicacion`).
-  4. Retorna el código de respuesta HTTP `201 Created` con el objeto DTO de la reseña registrada (incluyendo su `id`).
 
----
-
-### 🔵 HU 3.2: Consultar Reseñas asociadas a un Libro (Diego)
-* **Como:** Visitante
-* **Quiero:** Consultar las reseñas existentes filtrando por título o autor del libro, o ver el listado completo.
-* **Para:** Tomar una decisión informada sobre qué libro leer a continuación.
-* **Criterios de Aceptación:**
-  1. El endpoint `GET /api/resenas` retorna la lista completa de reseñas registradas.
-  2. Permite búsqueda o filtrado mediante parámetros opcionales (`GET /api/resenas?tituloLibro=Cien Años`).
-  3. La búsqueda es insensible a mayúsculas/minúsculas y coincide parcialmente (`ILIKE / CONTAINING`).
-  4. Retorna el código de respuesta HTTP `200 OK` con un array JSON de las reseñas encontradas.
+### Criterios de Aceptación Cumplidos:
+1. **Validación de campos obligatorios:** El endpoint `POST /api/resenas` exige los campos `tituloLibro`, `autorLibro`, `comentario` y `puntuacion`.
+2. **Validación de puntuación:** Garantiza que la puntuación esté estrictamente en el rango de 1 a 5 estrellas mediante `@Min(1)` y `@Max(5)`.
+3. **Marca de tiempo automática:** Genera la fecha y hora exacta de publicación (`fechaPublicacion`) al momento de guardar.
+4. **Respuesta HTTP:** Retorna el código de respuesta HTTP `201 Created` con el objeto DTO conteniendo el `id` autogenerado.
 
 ---
 
@@ -60,7 +40,7 @@ Un servicio web backend desarrollado en Spring Boot donde los lectores pueden pu
 A continuación se detalla el flujo colaborativo ejecutado por Joel Torres y Diego.
 
 ### Paso 1: Configuración Local de Git (`.gitconfig`)
-Cada integrante configuró su identidad local antes de generar commits:
+Cada integrante configuró su identidad local antes de realizar commits:
 
 ```bash
 git config --global user.name "Joel Torres"
@@ -79,9 +59,9 @@ Se inicializó el repositorio con la estructura Spring Boot y se definieron las 
 ```bash
 git init
 git add .
-git commit -m "feat: estructura base Spring Boot para Epica 3 de Resenas de Libros"
+git commit -m "feat: estructura base Spring Boot para HU 3.1 Publicar Resena"
 git branch -M main
-git remote add origin https://github.com/usuario/epica-resenas-libros.git
+git remote add origin https://github.com/usuario/epica-publicar-resena.git
 git push -u origin main
 
 # Creación de rama develop
@@ -97,12 +77,12 @@ git push -u origin develop
 ### Paso 3: Creación de Ramas por Feature
 Cada integrante creó su rama de desarrollo basada en `develop` siguiendo la convención acordada:
 
-* **Joel Torres:** `git checkout -b feat/jt/publicar-resena`
-* **Diego:** `git checkout -b feat/diego/consultar-resenas`
-* **Hotfix (Cherry-Pick):** `git checkout -b feat/jt/hotfix-validacion-puntuacion`
+* **Joel Torres:** `git checkout -b feat/jt/publicar-resena-controller`
+* **Diego:** `git checkout -b feat/diego/publicar-resena-service`
+* **Hotfix (Cherry-Pick):** `git checkout -b feat/jt/hotfix-validacion-dto`
 
 ```bash
-git checkout -b feat/jt/publicar-resena
+git checkout -b feat/jt/publicar-resena-controller
 git branch -a
 ```
 
@@ -116,8 +96,8 @@ Cada integrante realizó cambios puntuales y commits siguiendo la convención Co
 
 ```bash
 git add .
-git commit -m "feat(resena): implementar ResenaLibroController y DTOs para HU 3.1"
-git push origin feat/jt/publicar-resena
+git commit -m "feat(resena): implementar ResenaLibroController y DTOs con validaciones para HU 3.1"
+git push origin feat/jt/publicar-resena-controller
 ```
 
 > **Evidencia:**  
@@ -144,7 +124,7 @@ Las fusiones de ramas se realizaron exclusivamente en remoto a través de la int
 ### Paso 7: Fusión Selectiva de Commits (`git cherry-pick`)
 Para demostrar la integración selectiva de commits entre ramas:
 
-1. Se creó un commit de corrección de validaciones en `feat/jt/hotfix-validacion-puntuacion`.
+1. Se creó un commit de corrección de mensaje de validación en `feat/jt/hotfix-validacion-dto`.
 2. Se aplicó únicamente ese commit hacia `develop` o `main`:
 
 ```bash
@@ -160,7 +140,7 @@ git push origin develop
 ---
 
 ### Paso 8: Verificación y Ejecución de Pruebas
-Se ejecutó la suite de pruebas automatizadas en Spring Boot para certificar la funcionalidad de la Épica 3:
+Se ejecutó la suite de pruebas automatizadas en Spring Boot para certificar la funcionalidad de la HU 3.1:
 
 ```bash
 mvn clean test
@@ -175,8 +155,8 @@ mvn clean test
 
 1. **Clonar el proyecto:**
    ```bash
-   git clone https://github.com/usuario/epica-resenas-libros.git
-   cd epica-resenas-libros
+   git clone https://github.com/usuario/epica-publicar-resena.git
+   cd epica-publicar-resena
    ```
 2. **Ejecutar pruebas:**
    ```bash
@@ -195,4 +175,4 @@ mvn clean test
 
 ## 📌 Enlace del Repositorio
 
-* **URL del Repositorio GitHub:** `https://github.com/usuario/epica-resenas-libros`
+* **URL del Repositorio GitHub:** `https://github.com/usuario/epica-publicar-resena`
