@@ -1,4 +1,4 @@
-# Practica: Épica 3 - Plataforma de Reseñas de Libros y Flujo Colaborativo Git / GitHub
+# Práctica: Épica 3 - Plataforma de Reseñas de Libros y Flujo Colaborativo Git / GitHub
 
 > **Universidad Tecnológica de Chihuahua (UTCH)**  
 > **Asignatura:** Desarrollo Web Integral  
@@ -10,13 +10,13 @@
 
 ## 👥 Integrantes del Equipo (2 Personas)
 
-La distribución de tareas para la implementación de la **Épica 3** se dividió de manera equitativa entre los 2 integrantes del equipo:
+La distribución de tareas para la implementación de la **Épica 3** se dividió de manera equitativa entre los integrantes del equipo:
 
 | Integrante | Rol / Responsabilidad | Asignación Específica | Rama Git Asignada |
 | :--- | :--- | :--- | :--- |
-| **Integrante 1** | Developer | **HU 3.1:** Publicar Reseña de Libro (`POST /api/resenas`, DTOs, Controlador y Servicio de Registro) | `feature/hu-3.1-publicar-resena` |
-| **Integrante 2** | Developer | **HU 3.2:** Consultar Reseñas asociadas a un Libro (`GET /api/resenas`, Filtros por Título/Autor y JPA Repository) | `feature/hu-3.2-consultar-resenas` |
-| **Integración / Hotfix** | Ambos | Configuración de `.gitconfig`, Pruebas Automatizadas y Fusión Selectiva (`git cherry-pick`) | `feature/hotfix-validacion-puntuacion` |
+| **Joel Torres (jt)** | Developer | **HU 3.1:** Publicar Reseña de Libro (`POST /api/resenas`, DTOs, Controlador y Servicio de Registro) | `feat/jt/publicar-resena` |
+| **Diego** | Developer | **HU 3.2:** Consultar Reseñas asociadas a un Libro (`GET /api/resenas`, Filtros por Título/Autor y JPA Repository) | `feat/diego/consultar-resenas` |
+| **Integración / Hotfix** | Joel & Diego | Configuración de `.gitconfig`, Pruebas Automatizadas y Fusión Selectiva (`git cherry-pick`) | `feat/jt/hotfix-validacion-puntuacion` |
 
 ---
 
@@ -31,19 +31,19 @@ Un servicio web backend desarrollado en Spring Boot donde los lectores pueden pu
 
 ## 📝 Historias de Usuario (HU) y Criterios de Aceptación
 
-### 🔵 HU 3.1: Publicar Reseña de Libro (Integrante 1)
+### 🔵 HU 3.1: Publicar Reseña de Libro (Joel Torres)
 * **Como:** Lector
 * **Quiero:** Publicar una reseña indicando el título del libro, el nombre del autor, un comentario y una puntuación de 1 a 5 estrellas.
 * **Para:** Compartir mi opinión y recomendación con otros lectores de la comunidad.
 * **Criterios de Aceptación:**
   1. El endpoint `POST /api/resenas` valida que los campos `tituloLibro`, `autorLibro`, `comentario` y `puntuacion` sean obligatorios.
-  2. Valida que la puntuación esté estrictamente en el rango de 1 a 5 (`@Min(1)` y `@Max(5)`).
+  2. Valida que la puntuación esté strictly en el rango de 1 a 5 (`@Min(1)` y `@Max(5)`).
   3. Genera automáticamente la fecha y hora exacta de publicación (`fechaPublicacion`).
   4. Retorna el código de respuesta HTTP `201 Created` con el objeto DTO de la reseña registrada (incluyendo su `id`).
 
 ---
 
-### 🔵 HU 3.2: Consultar Reseñas asociadas a un Libro (Integrante 2)
+### 🔵 HU 3.2: Consultar Reseñas asociadas a un Libro (Diego)
 * **Como:** Visitante
 * **Quiero:** Consultar las reseñas existentes filtrando por título o autor del libro, o ver el listado completo.
 * **Para:** Tomar una decisión informada sobre qué libro leer a continuación.
@@ -57,14 +57,14 @@ Un servicio web backend desarrollado en Spring Boot donde los lectores pueden pu
 
 ## 🔀 Documentación del Flujo de Trabajo Git / GitHub
 
-A continuación se detalla el flujo colaborativo ejecutado por los 2 integrantes del equipo.
+A continuación se detalla el flujo colaborativo ejecutado por Joel Torres y Diego.
 
 ### Paso 1: Configuración Local de Git (`.gitconfig`)
 Cada integrante configuró su identidad local antes de generar commits:
 
 ```bash
-git config --global user.name "Nombre Integrante"
-git config --global user.email "integrante@utch.edu.mx"
+git config --global user.name "Joel Torres"
+git config --global user.email "joel.torres@utch.edu.mx"
 git config --list
 ```
 
@@ -94,15 +94,15 @@ git push -u origin develop
 
 ---
 
-### Paso 3: Creación de Ramas por Feature para cada Integrante
-Cada integrante creó su rama de desarrollo basada en `develop`:
+### Paso 3: Creación de Ramas por Feature
+Cada integrante creó su rama de desarrollo basada en `develop` siguiendo la convención acordada:
 
-* **Integrante 1:** `git checkout -b feature/hu-3.1-publicar-resena`
-* **Integrante 2:** `git checkout -b feature/hu-3.2-consultar-resenas`
-* **Hotfix (Cherry-Pick):** `git checkout -b feature/hotfix-validacion-puntuacion`
+* **Joel Torres:** `git checkout -b feat/jt/publicar-resena`
+* **Diego:** `git checkout -b feat/diego/consultar-resenas`
+* **Hotfix (Cherry-Pick):** `git checkout -b feat/jt/hotfix-validacion-puntuacion`
 
 ```bash
-git checkout -b feature/hu-3.1-publicar-resena
+git checkout -b feat/jt/publicar-resena
 git branch -a
 ```
 
@@ -117,7 +117,7 @@ Cada integrante realizó cambios puntuales y commits siguiendo la convención Co
 ```bash
 git add .
 git commit -m "feat(resena): implementar ResenaLibroController y DTOs para HU 3.1"
-git push origin feature/hu-3.1-publicar-resena
+git push origin feat/jt/publicar-resena
 ```
 
 > **Evidencia:**  
@@ -144,7 +144,7 @@ Las fusiones de ramas se realizaron exclusivamente en remoto a través de la int
 ### Paso 7: Fusión Selectiva de Commits (`git cherry-pick`)
 Para demostrar la integración selectiva de commits entre ramas:
 
-1. Se creó un commit de corrección de validaciones en `feature/hotfix-validacion-puntuacion`.
+1. Se creó un commit de corrección de validaciones en `feat/jt/hotfix-validacion-puntuacion`.
 2. Se aplicó únicamente ese commit hacia `develop` o `main`:
 
 ```bash
