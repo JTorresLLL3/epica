@@ -1,7 +1,5 @@
 package com.utch.epica;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.utch.epica.dto.ResenaLibroRequestDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,9 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.utch.epica.dto.ResenaLibroRequestDTO;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -83,6 +83,4 @@ class ResenaLibroValidacionTests {
                 "Titulo", "Autor", "Comentario", null);
         enviarYEsperar(dto, 400);
     }
-}
-    
 }
