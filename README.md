@@ -35,6 +35,39 @@ El desarrollo colaborativo de la **HU 3.1 (Publicar Reseña de Libro)** se divid
 
 ---
 
+## 📝 Historia de Usuario 3.2: Consultar Reseñas de Libros
+
+### Descripción
+* **Como:** Visitante de la plataforma.
+* **Quiero:** Consultar reseñas y filtrar las opiniones por título o autor del libro.
+* **Para:** Conocer las experiencias y calificaciones compartidas por otros lectores.
+
+### Implementación
+Se agregó la consulta de reseñas usando Spring Data JPA. El repositorio obtiene todas las reseñas ordenadas desde la más reciente y permite búsquedas parciales, sin distinguir mayúsculas y minúsculas, por título y autor. El servicio convierte los resultados al DTO de respuesta y el controlador los expone con respuestas HTTP `200 OK`.
+
+| Método | Endpoint | Resultado |
+| :--- | :--- | :--- |
+| `GET` | `/api/resenas` | Consulta todas las reseñas, ordenadas por fecha descendente. |
+| `GET` | `/api/resenas/titulo/{tituloLibro}` | Consulta reseñas cuyo título contiene el texto indicado. |
+| `GET` | `/api/resenas/autor/{autorLibro}` | Consulta reseñas cuyo autor contiene el texto indicado. |
+
+### Evidencia de la HU 3.2
+Guarda las capturas de Postman dentro de la carpeta `screenshots/`, en la raíz del repositorio. Usa estos nombres para mantener las capturas existentes de la HU 3.1:
+
+> **Captura 09:** Consulta de todas las reseñas, mostrando `GET /api/resenas` y la respuesta `200 OK`.
+> ![Captura 09: Consulta de todas las reseñas](screenshots/09_consultar_todas_resenas.png)
+
+> **Captura 10:** Búsqueda por título, mostrando la URL, el filtro usado y la respuesta `200 OK`.
+> ![Captura 10: Búsqueda de reseñas por título](screenshots/10_consultar_resenas_por_titulo.png)
+
+> **Captura 11:** Búsqueda por autor, mostrando la URL, el filtro usado y la respuesta `200 OK`.
+> ![Captura 11: Búsqueda de reseñas por autor](screenshots/11_consultar_resenas_por_autor.png)
+
+> **Captura 12:** Pull Request de `feature/hu-3.2-consultar-resenas` hacia `develop`, mostrando su fusión realizada en GitHub.
+> ![Captura 12: Pull Request y fusión remota de HU 3.2](screenshots/12_pr_merge_hu_3_2.png)
+
+---
+
 ## 🔀 Documentación del Flujo de Trabajo Git / GitHub
 
 A continuación se detalla el flujo colaborativo ejecutado por Joel Torres, Diego y Luis.
