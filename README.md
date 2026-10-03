@@ -16,7 +16,7 @@ El desarrollo colaborativo de la **HU 3.1 (Publicar Reseña de Libro)** se divid
 | :--- | :--- | :--- | :--- |
 | **Joel Torres (jt)** | Developer | **Controlador REST y DTOs:** Endpoints HTTP (`POST /api/resenas`), Validaciones (`@Valid`, `@NotBlank`, `@Min`, `@Max`) y DTOs de Request/Response | `feat/jt/publicar-resena-controller` |
 | **Diego** | Developer | **Capa de Servicio y Persistencia:** Lógica de negocio (`ResenaLibroService`), entidad JPA (`ResenaLibro`) y repositorio (`ResenaLibroRepository`) | `feat/diego/publicar-resena-service` |
-| **Luis** | DevSecOps / Integración | **Fusión Selectiva y Pruebas:** Ejecución de `git cherry-pick` (Captura 7) y Suite de Pruebas Automatizadas con Maven (Captura 8) | `feat/luis/hotfix-cherry-pick` |
+| **Luis** | DevSecOps / Integración | **Fusión Selectiva y Pruebas:** Ejecución de `git cherry-pick` (Captura 7) y Suite de Pruebas Automatizadas con Maven (Captura 8) | `feat/jt/hotfix-validacion-dto` |
 
 ---
 
@@ -29,7 +29,7 @@ El desarrollo colaborativo de la **HU 3.1 (Publicar Reseña de Libro)** se divid
 
 ### Criterios de Aceptación Cumplidos:
 1. **Validación de campos obligatorios:** El endpoint `POST /api/resenas` exige los campos `tituloLibro`, `autorLibro`, `comentario` y `puntuacion`.
-2. **Validación de puntuación:** Garantiza que la puntuación esté strictly en el rango de 1 a 5 estrellas mediante `@Min(1)` y `@Max(5)`.
+2. **Validación de puntuación:** Garantiza que la puntuación esté estrictamente en el rango de 1 a 5 estrellas mediante `@Min(1)` y `@Max(5)`.
 3. **Marca de tiempo automática:** Genera la fecha y hora exacta de publicación (`fechaPublicacion`) al momento de guardar.
 4. **Respuesta HTTP:** Retorna el código de respuesta HTTP `201 Created` con el objeto DTO conteniendo el `id` autogenerado.
 
@@ -112,7 +112,7 @@ Cada integrante creó su rama de desarrollo basada en `develop` siguiendo la con
 
 * **Joel Torres:** `git checkout -b feat/jt/publicar-resena-controller`
 * **Diego:** `git checkout -b feat/diego/publicar-resena-service`
-* **Luis:** `git checkout -b feat/luis/hotfix-cherry-pick`
+* **Luis:** `git checkout -b feat/jt/hotfix-validacion-dto`
 
 ```bash
 git checkout -b feat/jt/publicar-resena-controller
@@ -157,13 +157,14 @@ Las fusiones de ramas se realizaron exclusivamente en remoto a través de la int
 ### Paso 7: Fusión Selectiva de Commits por Luis (`git cherry-pick`)
 Para demostrar la integración selectiva de commits entre ramas, **Luis** realizó el proceso de cherry-pick:
 
-1. Creó un commit de ajuste en la rama `feat/luis/hotfix-cherry-pick`.
-2. Se aplicó únicamente ese commit hacia `develop` o `main`:
+1. Creó un commit con pruebas de validación del DTO (`aa12576`) en la rama `feat/jt/hotfix-validacion-dto`.
+2. Aplicó únicamente ese commit sobre `develop`:
 
 ```bash
+git log --oneline -n 1
+git checkout -b feat/jt/hotfix-temp
 git checkout develop
-git pull origin develop
-git cherry-pick <hash_del_commit>
+git cherry-pick aa12576
 git push origin develop
 ```
 
@@ -173,35 +174,37 @@ git push origin develop
 ---
 
 ### Paso 8: Verificación y Ejecución de Pruebas Automatizadas por Luis
-**Luis** ejecutó la suite de pruebas automatizadas en Spring Boot para certificar la estabilidad de la HU 3.1:
+**Luis** ejecutó la suite de pruebas automatizadas en Spring Boot, que incluye las pruebas de validación del DTO (`ResenaLibroValidacionTests`), para certificar la estabilidad de la HU 3.1:
 
 ```bash
 mvn clean test
 ```
 
+Resultado: 11 pruebas ejecutadas, 0 fallos, `BUILD SUCCESS`.
+
 > **Evidencia (Luis):**  
-> ![Captura 8: Pruebas Exitosas por Luis](screenshots/08_maven_tests.png)
+> ![Captura 8: Pruebas exitosas con Maven](screenshots/08_maven_tests.png)
 
 ---
 
 ## 🛠️ Instrucciones para Ejecutar la Aplicación
 
 1. **Clonar el proyecto:**
-   ```bash
+```bash
    git clone https://github.com/JTorresLLL3/epica.git
    cd epica
-   ```
+```
 2. **Configurar la Base de Datos PostgreSQL:**
    * Crear la base de datos `resenas_db` en PostgreSQL local.
    * Verificar la contraseña en `src/main/resources/application-dev.properties`.
-3. **Ejecutar pruebas:**
-   ```bash
+3. **Ejecutar pruebas** (usan H2 en memoria, no necesitan PostgreSQL):
+```bash
    mvn clean test
-   ```
+```
 4. **Iniciar servidor:**
-   ```bash
+```bash
    mvn spring-boot:run
-   ```
+```
 
 ---
 
