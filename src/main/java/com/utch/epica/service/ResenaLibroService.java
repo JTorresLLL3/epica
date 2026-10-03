@@ -1,12 +1,15 @@
 package com.utch.epica.service;
 
+import java.time.LocalDateTime;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Stream.Collectors;
+
+
 import com.utch.epica.dto.ResenaLibroRequestDTO;
 import com.utch.epica.dto.ResenaLibroResponseDTO;
 import com.utch.epica.model.ResenaLibro;
 import com.utch.epica.repository.ResenaLibroRepository;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class ResenaLibroService {
@@ -39,5 +42,12 @@ public class ResenaLibroService {
                 entity.getPuntuacion(),
                 entity.getFechaPublicacion()
         );
+    }
+
+    public List<ResenaLibroResponseDTO> consultarTodas() {
+        return resenaLibroRepository.findAllByOrderByFechaPublicacionDesc()
+                .stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
     }
 }
