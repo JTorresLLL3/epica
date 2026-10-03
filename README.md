@@ -10,13 +10,13 @@
 
 ## 👥 Integrantes del Equipo y Distribución de Tareas
 
-El desarrollo colaborativo de la **HU 3.1 (Publicar Reseña de Libro)** se dividió entre los 2 integrantes del equipo:
+El desarrollo colaborativo de la **HU 3.1 (Publicar Reseña de Libro)** se dividió entre los integrantes del equipo:
 
 | Integrante | Rol / Responsabilidad | Asignación Específica | Rama Git Asignada |
 | :--- | :--- | :--- | :--- |
 | **Joel Torres (jt)** | Developer | **Controlador REST y DTOs:** Endpoints HTTP (`POST /api/resenas`), Validaciones (`@Valid`, `@NotBlank`, `@Min`, `@Max`) y DTOs de Request/Response | `feat/jt/publicar-resena-controller` |
 | **Diego** | Developer | **Capa de Servicio y Persistencia:** Lógica de negocio (`ResenaLibroService`), entidad JPA (`ResenaLibro`) y repositorio (`ResenaLibroRepository`) | `feat/diego/publicar-resena-service` |
-| **Hotfix / Integración** | Joel & Diego | Configuración de `.gitconfig`, Pruebas Automatizadas y Fusión Selectiva (`git cherry-pick`) | `feat/jt/hotfix-validacion-dto` |
+| **Luis** | DevSecOps / Integración | **Fusión Selectiva y Pruebas:** Ejecución de `git cherry-pick` (Captura 7) y Suite de Pruebas Automatizadas con Maven (Captura 8) | `feat/luis/hotfix-cherry-pick` |
 
 ---
 
@@ -29,7 +29,7 @@ El desarrollo colaborativo de la **HU 3.1 (Publicar Reseña de Libro)** se divid
 
 ### Criterios de Aceptación Cumplidos:
 1. **Validación de campos obligatorios:** El endpoint `POST /api/resenas` exige los campos `tituloLibro`, `autorLibro`, `comentario` y `puntuacion`.
-2. **Validación de puntuación:** Garantiza que la puntuación esté strictly en el rango de 1 a 5 estrellas mediante `@Min(1)` y `@Max(5)`.
+2. **Validación de puntuación:** Garantiza que la puntuación esté estrictamente en el rango de 1 a 5 estrellas mediante `@Min(1)` y `@Max(5)`.
 3. **Marca de tiempo automática:** Genera la fecha y hora exacta de publicación (`fechaPublicacion`) al momento de guardar.
 4. **Respuesta HTTP:** Retorna el código de respuesta HTTP `201 Created` con el objeto DTO conteniendo el `id` autogenerado.
 
@@ -37,7 +37,7 @@ El desarrollo colaborativo de la **HU 3.1 (Publicar Reseña de Libro)** se divid
 
 ## 🔀 Documentación del Flujo de Trabajo Git / GitHub
 
-A continuación se detalla el flujo colaborativo ejecutado por Joel Torres y Diego.
+A continuación se detalla el flujo colaborativo ejecutado por Joel Torres, Diego y Luis.
 
 ### Paso 1: Configuración Local de Git (`.gitconfig`)
 Cada integrante configuró su identidad local antes de realizar commits:
@@ -79,7 +79,7 @@ Cada integrante creó su rama de desarrollo basada en `develop` siguiendo la con
 
 * **Joel Torres:** `git checkout -b feat/jt/publicar-resena-controller`
 * **Diego:** `git checkout -b feat/diego/publicar-resena-service`
-* **Hotfix (Cherry-Pick):** `git checkout -b feat/jt/hotfix-validacion-dto`
+* **Luis:** `git checkout -b feat/luis/hotfix-cherry-pick`
 
 ```bash
 git checkout -b feat/jt/publicar-resena-controller
@@ -121,10 +121,10 @@ Las fusiones de ramas se realizaron exclusivamente en remoto a través de la int
 
 ---
 
-### Paso 7: Fusión Selectiva de Commits (`git cherry-pick`)
-Para demostrar la integración selectiva de commits entre ramas:
+### Paso 7: Fusión Selectiva de Commits por Luis (`git cherry-pick`)
+Para demostrar la integración selectiva de commits entre ramas, **Luis** realizó el proceso de cherry-pick:
 
-1. Se creó un commit de corrección de mensaje de validación en `feat/jt/hotfix-validacion-dto`.
+1. Creó un commit de ajuste en la rama `feat/luis/hotfix-cherry-pick`.
 2. Se aplicó únicamente ese commit hacia `develop` o `main`:
 
 ```bash
@@ -134,20 +134,20 @@ git cherry-pick <hash_del_commit>
 git push origin develop
 ```
 
-> **Evidencia:**  
-> ![Captura 7: Aplicación de Git Cherry-Pick](screenshots/07_cherry_pick.png)
+> **Evidencia (Luis):**  
+> ![Captura 7: Aplicación de Git Cherry-Pick por Luis](screenshots/07_cherry_pick.png)
 
 ---
 
-### Paso 8: Verificación y Ejecución de Pruebas
-Se ejecutó la suite de pruebas automatizadas en Spring Boot para certificar la funcionalidad de la HU 3.1:
+### Paso 8: Verificación y Ejecución de Pruebas Automatizadas por Luis
+**Luis** ejecutó la suite de pruebas automatizadas en Spring Boot para certificar la estabilidad de la HU 3.1:
 
 ```bash
 mvn clean test
 ```
 
-> **Evidencia:**  
-> ![Captura 8: Pruebas Exitosas](screenshots/08_maven_tests.png)
+> **Evidencia (Luis):**  
+> ![Captura 8: Pruebas Exitosas por Luis](screenshots/08_maven_tests.png)
 
 ---
 
