@@ -4,9 +4,13 @@ import com.utch.epica.dto.ResenaLibroRequestDTO;
 import com.utch.epica.dto.ResenaLibroResponseDTO;
 import com.utch.epica.service.ResenaLibroService;
 import jakarta.validation.Valid;
+
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/resenas")
@@ -24,4 +28,20 @@ public class ResenaLibroController {
         ResenaLibroResponseDTO creada = resenaLibroService.publicarResena(requestDTO);
         return new ResponseEntity<>(creada, HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public ResponseEntity<List<ResenaLibroResponseDTO>> consultarTodas() {
+        return ResponseEntity.ok(resenaLibroService.consultarTodas());
+    }
+
+    @GetMapping("/titulo/{tituloLibro}")
+    public ResponseEntity<List<ResenaLibroResponseDTO>> consultarPorTitulo(@PathVariable String tituloLibro) {
+        return ResponseEntity.ok(resenaLibroService.consultarPorTitulo(tituloLibro));
+    }
+
+    @GetMapping("/autor/{autorLibro}")
+    public ResponseEntity<List<ResenaLibroResponseDTO>> consultarPorAutor(@PathVariable String autorLibro) {
+        return ResponseEntity.ok(resenaLibroService.consultarPorAutor(autorLibro));
+    }
+    
 }
