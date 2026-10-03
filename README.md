@@ -29,7 +29,7 @@ El desarrollo colaborativo de la **HU 3.1 (Publicar Reseña de Libro)** se divid
 
 ### Criterios de Aceptación Cumplidos:
 1. **Validación de campos obligatorios:** El endpoint `POST /api/resenas` exige los campos `tituloLibro`, `autorLibro`, `comentario` y `puntuacion`.
-2. **Validación de puntuación:** Garantiza que la puntuación esté estrictamente en el rango de 1 a 5 estrellas mediante `@Min(1)` y `@Max(5)`.
+2. **Validación de puntuación:** Garantiza que la puntuación esté strictly en el rango de 1 a 5 estrellas mediante `@Min(1)` y `@Max(5)`.
 3. **Marca de tiempo automática:** Genera la fecha y hora exacta de publicación (`fechaPublicacion`) al momento de guardar.
 4. **Respuesta HTTP:** Retorna el código de respuesta HTTP `201 Created` con el objeto DTO conteniendo el `id` autogenerado.
 
@@ -61,7 +61,7 @@ git init
 git add .
 git commit -m "feat: estructura base Spring Boot para HU 3.1 Publicar Resena"
 git branch -M main
-git remote add origin https://github.com/usuario/epica-publicar-resena.git
+git remote add origin https://github.com/JTorresLLL3/epica.git
 git push -u origin main
 
 # Creación de rama develop
@@ -155,24 +155,23 @@ mvn clean test
 
 1. **Clonar el proyecto:**
    ```bash
-   git clone https://github.com/usuario/epica-publicar-resena.git
-   cd epica-publicar-resena
+   git clone https://github.com/JTorresLLL3/epica.git
+   cd epica
    ```
-2. **Ejecutar pruebas:**
+2. **Configurar la Base de Datos PostgreSQL:**
+   * Crear la base de datos `resenas_db` en PostgreSQL local.
+   * Verificar la contraseña en `src/main/resources/application-dev.properties`.
+3. **Ejecutar pruebas:**
    ```bash
    mvn clean test
    ```
-3. **Iniciar servidor:**
+4. **Iniciar servidor:**
    ```bash
    mvn spring-boot:run
    ```
-4. **Acceso a H2 Console:**
-   * URL: `http://localhost:8080/h2-console`
-   * JDBC URL: `jdbc:h2:mem:epicadb`
-   * User: `sa` | Password: *(vacío)*
 
 ---
 
 ## 📌 Enlace del Repositorio
 
-* **URL del Repositorio GitHub:** `https://github.com/usuario/epica-publicar-resena`
+* **URL del Repositorio GitHub:** `https://github.com/JTorresLLL3/epica`
